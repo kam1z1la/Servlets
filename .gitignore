@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+.idea
+/workspace.xml
+.gradle
+**/build/
+!src/**/build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+.gradletasknamecache
