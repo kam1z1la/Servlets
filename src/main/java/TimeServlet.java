@@ -28,14 +28,14 @@ public class TimeServlet extends HttpServlet {
         resp.getWriter().close();
     }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        log("Servlet created");
-    }
+//    @Override
+//    public void destroy() {
+//        super.destroy();
+//    }
+//
+//    @Override
+//    public void init(ServletConfig config) throws ServletException {
+//        super.init(config);
+//        log("Servlet created");
+//    }
 }
