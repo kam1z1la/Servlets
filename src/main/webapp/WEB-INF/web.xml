@@ -23,11 +23,11 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>TimeServlet</servlet-name>
-        <servlet-class>TimeServlet</servlet-class>
+        <servlet-name>thymeleaf.TimeServlet</servlet-name>
+        <servlet-class>thymeleaf.TimeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>TimeServlet</servlet-name>
+        <servlet-name>thymeleaf.TimeServlet</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 </web-app>
