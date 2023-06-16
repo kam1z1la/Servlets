@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<style>
+    .center-table {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<form action="/Servlet/time" method="post">
+    <div>
+        <pi>Enter time zone</pi>
+    </div>
+    <div>
+        <input type="text" name="timezone" id="timezone">
+    </div>
+    <div>
+        <button>Show timezone</button>
+    </div>
+</form>
+
+<div class="center-table">
+    <table>
+        <tr>
+            <td>Time</td>
+            <td>Date</td>
+            <td>Time zone</td>
+        </tr>
+        <tr>
+            <td th:each="entry : ${timezone}"
+                th:text="${entry.value}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
