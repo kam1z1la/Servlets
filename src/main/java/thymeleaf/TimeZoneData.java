@@ -6,5 +6,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class TimeZoneData {
-    public static Object TIMEZONE;
+    public static String TIMEZONE;
 }

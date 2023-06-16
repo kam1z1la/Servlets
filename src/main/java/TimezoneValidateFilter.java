@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -34,17 +35,24 @@ public class TimezoneValidateFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        TimeZoneData.TIMEZONE = getLastCookie(req, res, req.getParameter("timezone"));
+        TimeZoneData.TIMEZONE = getLastCookie(req, res, req.getParameter("timezone"))
+                .toString();
 
-        for (var time : TimeZone.getAvailableIDs()) {
-            if (time.equals(TimeZoneData.TIMEZONE.toString())) {
+        if (!TimeZoneData.TIMEZONE.matches(".*[+-].*")) {
+            for (var time : TimeZone.getAvailableIDs()) {
+                if (time.equals(TimeZoneData.TIMEZONE)) {
+                    chain.doFilter(req, res);
+                }
+            }
+        } else {
+            if (TimeZoneData.TIMEZONE.startsWith("UTC")) {
                 chain.doFilter(req, res);
             }
         }
 
         res.setStatus(400);
         res.setContentType("text/html");
-        Cookie cookieRemove = new Cookie("lastTimezone", TimeZoneData.TIMEZONE.toString());
+        Cookie cookieRemove = new Cookie("lastTimezone", TimeZoneData.TIMEZONE);
         cookieRemove.setMaxAge(0);
         res.addCookie(cookieRemove);
         Context simpleContext = new Context(Locale.ENGLISH);
@@ -58,15 +66,15 @@ public class TimezoneValidateFilter extends HttpFilter {
         session.setMaxInactiveInterval(-1);
 
         if (nameTimeZone != null) {
-            session.setAttribute("lastTimezone", nameTimeZone);
-            Cookie cookie = new Cookie("lastTimezone", nameTimeZone);
+            String time = nameTimeZone.replace(" ", "+");
+            session.setAttribute("lastTimezone", time);
+            Cookie cookie = new Cookie("lastTimezone", time);
             res.addCookie(cookie);
             return cookie.getValue();
         } else {
             for (var cookie : req.getCookies()) {
-                    if (cookie.getName().equals("lastTimezone")) {
-                        return cookie.getValue();
-
+                if (cookie.getName().equals("lastTimezone")) {
+                    return cookie.getValue();
                 }
             }
         }

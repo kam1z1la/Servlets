@@ -39,12 +39,10 @@ public class TimeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
 
-        String timezone = TimeZoneData.TIMEZONE.toString();
-
         Map<String, Object> timezoneMap = new LinkedHashMap<>();
-        timezoneMap.put("Date", LocalTime.now(ZoneId.of(timezone)));
-        timezoneMap.put("Time", LocalDate.now(ZoneId.of(timezone)));
-        timezoneMap.put("Time zone", ZoneId.of(timezone));
+        timezoneMap.put("Date", LocalTime.now(ZoneId.of(TimeZoneData.TIMEZONE)));
+        timezoneMap.put("Time", LocalDate.now(ZoneId.of(TimeZoneData.TIMEZONE)));
+        timezoneMap.put("Time zone", ZoneId.of(TimeZoneData.TIMEZONE));
 
         Context simpleContext = new Context(
                 Locale.ENGLISH,
